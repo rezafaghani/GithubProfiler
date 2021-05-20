@@ -1,6 +1,6 @@
 using System;
 
-namespace Prifiler.Api
+namespace Proifiler.Api
 {
     public class WeatherForecast
     {

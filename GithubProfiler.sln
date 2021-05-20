@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prifiler.Api", "Prifiler.Api\Prifiler.Api.csproj", "{FEEC8181-3974-457F-B092-DB1CED138F04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prifiler.Api", "Profiler.Api\Profiler.Api.csproj", "{FEEC8181-3974-457F-B092-DB1CED138F04}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler.Test", "Profiler.Test\Profiler.Test.csproj", "{B823DE06-E49C-45DE-8BEB-C416C6B74659}"
 EndProject
