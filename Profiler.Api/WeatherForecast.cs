@@ -1,6 +1,6 @@
 using System;
 
-namespace Proifiler.Api
+namespace Profiler.Api
 {
     public class WeatherForecast
     {
