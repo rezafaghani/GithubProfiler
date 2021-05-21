@@ -1,21 +1,31 @@
 using System;
 using System.Reflection;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
 using HealthChecks.UI.Client;
 using IntegrationEventLogEF;
+using MediatR;
+using MediatR.Extensions.FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
+using Microsoft.Extensions.Options;
+using Profiler.Api.Application.Behaviors;
+using Profiler.Api.Application.Commands.GithubProfileCommands.CreateCommands;
 using Profiler.Api.Controllers;
+using Profiler.Api.Infrastructure.AutofacModules;
 using Profiler.Api.Infrastructure.Filters;
+using Profiler.Api.Infrastructure.Helpers;
 using Profiler.Infrastructure;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace Profiler.Api
 {
@@ -29,18 +39,47 @@ namespace Profiler.Api
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public virtual IServiceProvider ConfigureServices(IServiceCollection services)
         {
+           
             services
                 .AddCustomMvc()
                 .AddHealthChecks(Configuration)
                 .AddCustomDbContext(Configuration)
-                .AddCustomSwagger(Configuration)
-                .AddCustomConfiguration(Configuration);
+                
+                .AddCustomConfiguration(Configuration)
+                .AddApiVersioning(options =>
+                {
+                    options.DefaultApiVersion = new ApiVersion(1, 0);
+                    options.AssumeDefaultVersionWhenUnspecified = true;
+                    options.ReportApiVersions = true;
+                })
+                .AddVersionedApiExplorer(options =>
+                {
+                    // add the versioned api explorer, which also adds IApiVersionDescriptionProvider service
+                    // note: the specified format code will format the version as "'v'major[.minor][-status]"
+                    options.GroupNameFormat = "'v'VVV";
+
+                    // note: this option is only necessary when versioning by url segment. the SubstitutionFormat
+                    // can also be used to control the format of the API version in route templates
+                    options.SubstituteApiVersionInUrl = true;
+                })
+                .AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>()
+                .AddSwaggerGen(options => options.OperationFilter<SwaggerDefaultValues>());
+          
+  
+            var container = new ContainerBuilder();
+            container.Populate(services);
+
+            container.RegisterModule(new MediatorModule());
+            container.RegisterModule(new ApplicationModule(Configuration["ConnectionString"]));
+
+            return new AutofacServiceProvider(container.Build());
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory, IApiVersionDescriptionProvider provider)
         {
             var pathBase = Configuration["PATH_BASE"];
             if (!string.IsNullOrEmpty(pathBase))
@@ -50,12 +89,15 @@ namespace Profiler.Api
             }
 
             app.UseSwagger()
-               .UseSwaggerUI(c =>
-               {
-                   c.SwaggerEndpoint($"{ (!string.IsNullOrEmpty(pathBase) ? pathBase : string.Empty) }/swagger/v1/swagger.json", "Profiling.Api V1");
-                   c.OAuthClientId("profilingswaggerui");
-                   c.OAuthAppName("Profiling Swagger UI");
-               });
+                .UseSwaggerUI(  
+                options =>  
+                {  
+                    // build a swagger endpoint for each discovered API version  
+                    foreach (var description in provider.ApiVersionDescriptions)  
+                    {  
+                        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());  
+                    }  
+                }); 
 
             app.UseRouting();
             app.UseCors("CorsPolicy");
@@ -99,7 +141,7 @@ namespace Profiler.Api
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                    .SetIsOriginAllowed((host) => true)
+                    .SetIsOriginAllowed((_) => true)
                     .AllowAnyMethod()
                     .AllowAnyHeader()
                     .AllowCredentials());
@@ -118,7 +160,7 @@ namespace Profiler.Api
                 .AddNpgSql(
                     configuration["ConnectionString"],
                     name: "ProfilingDB-check",
-                    tags: new string[] { "profiledb" });
+                    tags: new[] { "profiledb" });
 
             return services;
         }
@@ -150,21 +192,6 @@ namespace Profiler.Api
             return services;
         }
 
-        public static IServiceCollection AddCustomSwagger(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddSwaggerGen(options =>
-            {
-                options.SwaggerDoc("v1", new OpenApiInfo
-                {
-                    Title = "Github - Profiling HTTP API",
-                    Version = "v1",
-                    Description = "The Profiling Service HTTP API"
-                });
-                
-            });
-
-            return services;
-        }
 
         public static IServiceCollection AddCustomConfiguration(this IServiceCollection services, IConfiguration configuration)
         {

@@ -1,4 +1,6 @@
-﻿using System.Net;
+﻿using System.Collections.Generic;
+using System.Net;
+using FluentValidation;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -35,9 +37,19 @@ namespace Profiler.Api.Infrastructure.Filters
                     Status = StatusCodes.Status400BadRequest,
                     Detail = "Please refer to the errors property for additional details."
                 };
-
-                problemDetails.Errors.Add("DomainValidations", new string[] { context.Exception.Message.ToString() });
-
+                var errorMessages = new List<string>();
+                if (context.Exception.InnerException!=null)
+                {
+                    var validationFailures = (context.Exception.InnerException as ValidationException)?.Errors;
+                    if (validationFailures != null)
+                        foreach (var errorItem in validationFailures)
+                        {
+                            errorMessages.Add(errorItem.ErrorMessage);
+                        }
+                }
+                
+                problemDetails.Errors.Add("DomainValidations",context.Exception.InnerException!=null?errorMessages.ToArray(): new string[] {context.Exception.Message });
+                
                 context.Result = new BadRequestObjectResult(problemDetails);
                 context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
             }
