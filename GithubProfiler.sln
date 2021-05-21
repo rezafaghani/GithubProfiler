@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler.Domain", "Profiler
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler.Infrastructure", "Profiler.Infrastructure\Profiler.Infrastructure.csproj", "{57C29D3C-7268-4A34-B00F-C313C1C5DE6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationEventLogEF", "IntegrationEventLogEF\IntegrationEventLogEF.csproj", "{1FF53AAE-FD5E-4E5B-A88F-976A0C4BB792}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{57C29D3C-7268-4A34-B00F-C313C1C5DE6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57C29D3C-7268-4A34-B00F-C313C1C5DE6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57C29D3C-7268-4A34-B00F-C313C1C5DE6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FF53AAE-FD5E-4E5B-A88F-976A0C4BB792}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FF53AAE-FD5E-4E5B-A88F-976A0C4BB792}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FF53AAE-FD5E-4E5B-A88F-976A0C4BB792}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FF53AAE-FD5E-4E5B-A88F-976A0C4BB792}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
