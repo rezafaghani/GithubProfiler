@@ -10,6 +10,8 @@
         <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="5.0.1" />
         <PackageReference Include="Autofac" Version="6.2.0" />
         <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+        <PackageReference Include="Dapper" Version="2.0.90" />
+        <PackageReference Include="Dapper.Extensions.PostgreSQL" Version="3.3.0" />
         <PackageReference Include="FluentValidation" Version="10.1.0" />
         <PackageReference Include="FluentValidation.AspNetCore" Version="10.1.0" />
         <PackageReference Include="HealthChecks.PostgreSQL" Version="1.1.0" />

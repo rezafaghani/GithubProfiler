@@ -19,6 +19,32 @@ namespace Profiler.Domain.SeedWork
                 _Id = value;
             }
         }
+        public bool Deleted { get; set; }
+        public DateTime CreateDateTime { get; protected set; }
+        public DateTime? UpdateDateTime { get; protected set; }
+        public DateTime? DeleteDateTime { get; protected set; }
+        public void SetCreateDateTime()
+        {
+            CreateDateTime = DateTime.Now;
+        }
+
+        public void SetUpdateDateTime()
+        {
+            UpdateDateTime = DateTime.Now;
+        }
+
+        public void SetDeleteDateTime()
+        {
+            DeleteDateTime = DateTime.Now;
+        }
+        public void SetDeleted()
+        {
+            Deleted = true;
+        }
+        public void UndoDeleted()
+        {
+            Deleted = false;
+        }
 
         private List<INotification> _domainEvents;
         public IReadOnlyCollection<INotification> DomainEvents => _domainEvents?.AsReadOnly();

@@ -133,7 +133,7 @@ namespace Profiler.Api
                     options.Filters.Add(typeof(HttpGlobalExceptionFilter));
                 })
                 // Added for functional tests
-                .AddApplicationPart(typeof(ProfileController).Assembly)
+                .AddApplicationPart(typeof(ContactsController).Assembly)
                 .AddJsonOptions(options => options.JsonSerializerOptions.WriteIndented = true)
                 .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 

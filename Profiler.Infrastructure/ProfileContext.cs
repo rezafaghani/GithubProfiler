@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
+using Profiler.Domain.AggregatesModel;
 using Profiler.Domain.SeedWork;
 using Profiler.Infrastructure.EntityConfigurations;
 
@@ -19,7 +20,9 @@ namespace Profiler.Infrastructure
         public const string DefaultSchema = "profiling";
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;
-
+        public DbSet<GithubProfile> Profiles { get; set; }
+        public DbSet<ProfileRepo> ProfileRepos { get; set; }
+        
         public ProfileContext(DbContextOptions<ProfileContext> options) : base(options) { }
 
         public IDbContextTransaction GetCurrentTransaction() => _currentTransaction;
