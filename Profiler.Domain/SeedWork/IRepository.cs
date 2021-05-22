@@ -11,7 +11,6 @@ namespace Profiler.Domain.SeedWork
         Task AddRange(List<T> entity);
         T Update(T entity);
         T Delete(T entity);
-        IQueryable<T> GetAll();
-        Task<T> FindAsync(T entity);
+       Task<T> GetAsync(long id);
     }
 }

@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Prifiler.Api", "Profiler.Api\Profiler.Api.csproj", "{FEEC8181-3974-457F-B092-DB1CED138F04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler.Test", "Profiler.Test\Profiler.Test.csproj", "{B823DE06-E49C-45DE-8BEB-C416C6B74659}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler.UnitTests", "Profiler.UnitTests\Profiler.UnitTests.csproj", "{B823DE06-E49C-45DE-8BEB-C416C6B74659}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Profiler.Domain", "Profiler.Domain\Profiler.Domain.csproj", "{75738BB3-1611-4121-AB77-95850767C7C2}"
 EndProject

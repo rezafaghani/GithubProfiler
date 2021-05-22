@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Profiler.Api.Application.Queries.GithubProfileQueries;
+using Profiler.Domain.AggregatesModel;
 using Profiler.Domain.SeedWork;
 using Profiler.Infrastructure.Idempotency;
 using Profiler.Infrastructure.Repositories;
@@ -22,7 +23,16 @@ namespace Profiler.Api.Infrastructure.AutofacModules
             builder.Register(c => new GithubProfileQuery(QueriesConnectionString))
                 .As<IGithubProfileQuery>()
                 .InstancePerLifetimeScope();
-            builder.RegisterGeneric(typeof(Repository<>)).As(typeof(IRepository<>));
+           
+            builder.RegisterType<ProfileRepoRepository>()
+                .As<IProfileRepoRepository>()
+                .InstancePerLifetimeScope();
+            
+            
+            builder.RegisterType<ProfileRepository>()
+                .As<IProfileRepository>()
+                .InstancePerLifetimeScope();
+            
             builder.RegisterType<RequestManager>()
                .As<IRequestManager>()
                .InstancePerLifetimeScope();

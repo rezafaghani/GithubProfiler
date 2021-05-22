@@ -20,8 +20,8 @@ namespace Profiler.Infrastructure
         public const string DefaultSchema = "profiling";
         private readonly IMediator _mediator;
         private IDbContextTransaction _currentTransaction;
-        public DbSet<GithubProfile> Profiles { get; set; }
-        public DbSet<ProfileRepo> ProfileRepos { get; set; }
+        // public DbSet<GithubProfile> Profiles { get; set; }
+        // public DbSet<ProfileRepo> ProfileRepos { get; set; }
         
         public ProfileContext(DbContextOptions<ProfileContext> options) : base(options) { }
 

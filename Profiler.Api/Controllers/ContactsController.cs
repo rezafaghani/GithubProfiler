@@ -23,6 +23,11 @@ namespace Profiler.Api.Controllers
             _githubProfileQuery = githubProfileQuery;
         }
 
+        /// <summary>
+        /// insert account info
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpPost()]
         [MapToApiVersion("1")]
         [ProducesResponseType(type: typeof(bool),statusCode: (int) HttpStatusCode.OK)]
@@ -32,8 +37,13 @@ namespace Profiler.Api.Controllers
         {
             return Ok(await _mediator.Send(input));
         }
+        /// <summary>
+        /// search on accounts that save before
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
         [HttpGet()]
-        [MapToApiVersion("1")]
+        [MapToApiVersion("2")]
         [ProducesResponseType(type: typeof(IEnumerable<SearchResultModel>),statusCode: (int) HttpStatusCode.OK)]
         [ProducesResponseType(type: typeof(IEnumerable<SearchResultModel>),statusCode: (int) HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
