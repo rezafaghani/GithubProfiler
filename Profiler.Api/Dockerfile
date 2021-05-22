@@ -5,7 +5,11 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Profiler.Api/Profiler.Api.csproj", "Prifiler.Api/"]
+COPY ["IntegrationEventLogEF/IntegrationEventLogEF.csproj", "IntegrationEventLogEF/"]
+COPY ["Profiler.Domain/Profiler.Domain.csproj", "Profiler.Domain/"]
+COPY ["Profiler.Infrastructure/Profiler.Infrastructure.csproj", "Profiler.Infrastructure/"]
+COPY ["Profiler.UnitTests/Profiler.UnitTests.csproj", "Profiler.UnitTests/"]
+COPY ["Profiler.Api/Profiler.Api.csproj", "Profiler.Api/"]
 RUN dotnet restore "Profiler.Api/Profiler.Api.csproj"
 COPY . .
 WORKDIR "/src/Profiler.Api"
