@@ -18,8 +18,11 @@ namespace Profiler.Api.Application.Commands.GithubProfileCommands.CreateRepoComm
 
         public async Task<bool> Handle(CreateRepoCommand request, CancellationToken cancellationToken)
         {
+            // create github client
             var github = new GitHubClient(new ProductHeaderValue("MyAmazingApp"));
+            //get repos of user by account name
             var repo = await github.Repository.GetAllForUser(request.AccountName);
+            //if repos have any added to db
             if (repo != null)
             {
                 var repoList = repo.Select(x => new ProfileRepo
@@ -27,16 +30,15 @@ namespace Profiler.Api.Application.Commands.GithubProfileCommands.CreateRepoComm
                     Name = x.Name,
                     GithubProfileId = request.ProfileId
                 }).ToList();
-                var existList =(await _repository.GetByProfileIdAsync(request.ProfileId)).Select(x=>x.Name);
+                var existList = (await _repository.GetByProfileIdAsync(request.ProfileId)).Select(x => x.Name);
                 var repoNotDuplicates = repoList.Where(x => !existList.Contains(x.Name)).ToList();
                 if (repoNotDuplicates.Any())
                 {
                     await _repository.AddRange(repoNotDuplicates);
-                    return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);    
+                    return await _repository.UnitOfWork.SaveEntitiesAsync(cancellationToken);
                 }
 
                 return true;
-
             }
 
             return false;

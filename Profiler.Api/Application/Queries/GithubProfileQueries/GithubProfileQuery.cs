@@ -8,16 +8,19 @@ using Npgsql;
 
 namespace Profiler.Api.Application.Queries.GithubProfileQueries
 {
-    public class GithubProfileQuery :IGithubProfileQuery
+    public class GithubProfileQuery : IGithubProfileQuery
     {
         private string _connectionString = string.Empty;
+
         public GithubProfileQuery(string constr)
         {
-            _connectionString = !string.IsNullOrWhiteSpace(constr) ? constr : throw new ArgumentNullException(nameof(constr));
+            _connectionString = !string.IsNullOrWhiteSpace(constr)
+                ? constr
+                : throw new ArgumentNullException(nameof(constr));
         }
+
         public async Task<IEnumerable<SearchResultModel>> SearchContacts(SearchModel input)
         {
-           
             using (var connection = new NpgsqlConnection(_connectionString))
             {
                 var parameterDictionary = new Dictionary<string, object>
@@ -34,7 +37,8 @@ namespace Profiler.Api.Application.Queries.GithubProfileQueries
                 }
 
                 if (!string.IsNullOrWhiteSpace(input.Name))
-                { parameterDictionary.Add("@Name", input.Name);
+                {
+                    parameterDictionary.Add("@Name", input.Name);
                     query.Append(" and Name=@Name  ");
                 }
 
@@ -49,16 +53,18 @@ namespace Profiler.Api.Application.Queries.GithubProfileQueries
                     parameterDictionary.Add("@GithubAccount", input.GithubAccount);
                     query.Append(" and GithubAccount = @GithubAccount  ");
                 }
+
                 if (!string.IsNullOrWhiteSpace(input.PhoneNumber))
                 {
                     parameterDictionary.Add("@PhoneNumber", input.PhoneNumber);
                     query.Append(" and PhoneNumber = @PhoneNumber  ");
                 }
+
                 connection.Open();
                 var parameters = new DynamicParameters(parameterDictionary);
-                var totalCountResult =await connection.QueryAsync<SearchResultModel>(query.ToString(), parameters);
+                var totalCountResult = await connection.QueryAsync<SearchResultModel>(query.ToString(), parameters);
                 query.Append(" limit @PageSize offset @PageNumber ;");
-                var profileResult =  connection.Query<SearchResultModel>(query.ToString(), parameters);
+                var profileResult = connection.Query<SearchResultModel>(query.ToString(), parameters);
                 return profileResult.Select(x => new SearchResultModel
                 {
                     Id = x.Id,
@@ -71,15 +77,11 @@ namespace Profiler.Api.Application.Queries.GithubProfileQueries
                     CreateDateTime = x.CreateDateTime,
                     DeleteDateTime = x.DeleteDateTime,
                     UpdateDateTime = x.UpdateDateTime,
-                    PageNumber=input.PageNumber,
-                    PageSize=input.PageSize,
-                    TotalCount=totalCountResult.Count()
-                    
-                    
+                    PageNumber = input.PageNumber,
+                    PageSize = input.PageSize,
+                    TotalCount = totalCountResult.Count()
                 }).ToList();
-
             }
-            
         }
     }
 }
