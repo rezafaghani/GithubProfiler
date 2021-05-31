@@ -2,7 +2,7 @@ using Profiler.Domain.SeedWork;
 
 namespace Profiler.Domain.AggregatesModel
 {
-    public class ProfileRepo : Entity, IAggregateRoot
+    public class ProfileRepo : Entity
     {
         #region | Properties |
 

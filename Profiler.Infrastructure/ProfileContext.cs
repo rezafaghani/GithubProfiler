@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
-using Profiler.Domain.AggregatesModel;
 using Profiler.Domain.SeedWork;
 using Profiler.Infrastructure.EntityConfigurations;
 

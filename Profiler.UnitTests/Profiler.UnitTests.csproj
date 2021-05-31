@@ -29,4 +29,8 @@
       <ProjectReference Include="..\Profiler.Domain\Profiler.Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Domain\SeedWork" />
+    </ItemGroup>
+
 </Project>
