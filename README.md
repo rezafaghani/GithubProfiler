@@ -3,7 +3,7 @@
  <img width=200px height=200px src="https://i.imgur.com/6wj0hh6.jpg" alt="Project logo"></a>
 </p>
 
-<h3 align="center">Project Title</h3>
+<h3 align="center">Github Profile</h3>
 
 <div align="center">
 
@@ -16,7 +16,7 @@
 
 ---
 
-<p align="center"> Few lines describing your project.
+<p align="center"> This Project is a sample how to use Github Api to get user profile and user repositories
     <br> 
 </p>
 
@@ -34,7 +34,7 @@
 
 ## 🧐 About <a name = "about"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+This Project is a sample how to use Github Api to get user profile and user repositories with C# and .Net Core 
 
 ## 🏁 Getting Started <a name = "getting_started"></a>
 
@@ -42,11 +42,12 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
 
-```
-Give examples
-```
+Install 
+- .Net Core 5 ,
+- PostgreSql
+- VsCode  ( Or other IDE )
+
 
 ### Installing
 
