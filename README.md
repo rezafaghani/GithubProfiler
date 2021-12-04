@@ -44,7 +44,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 
 Install 
-- .Net Core 5 ,
+- .Net Core 5 
 - PostgreSql
 - VsCode  ( Or other IDE )
 
@@ -53,60 +53,43 @@ Install
 
 A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo.
+- Install .NetCore 5 (sdk)
+- Install PostgreSql
+- Install VsCode
+- Change connectionstring in /Profiler.Api/appsettings.json && /Profiler.Api/appsettings.Development.json
+- Move to /Profiler.Api and run this command "dotnet restore"
+- Then run "dotnet run" to start application
 
 ## 🔧 Running the tests <a name = "tests"></a>
 
-Explain how to run the automated tests for this system.
-
+Go to /Profiler.UnitTests and run this command "dotnet test"
 ### Break down into end to end tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
+This test check if the data that get from Github insert correctly to database or not
 
 ### And coding style tests
 
-Explain what these tests test and why
-
-```
-Give an example
-```
+This unit test mock the CreateProfileCommandHandler
 
 ## 🎈 Usage <a name="usage"></a>
 
-Add notes about how to use the system.
+This is a sample code that usage MediatR pattern and show how to use DDD and versioning on api
 
 ## 🚀 Deployment <a name = "deployment"></a>
 
-Add additional notes about how to deploy this on a live system.
+You can deploy this project on cloude with docker
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 
-- [MongoDB](https://www.mongodb.com/) - Database
-- [Express](https://expressjs.com/) - Server Framework
-- [VueJs](https://vuejs.org/) - Web Framework
-- [NodeJs](https://nodejs.org/en/) - Server Environment
+- [PostgreSql](https://www.postgresql.org/) - Database
+- [DotnetCore 5](https://dotnet.microsoft.com/download/) - Server Framework
+- [C#](https://docs.microsoft.com/en-us/dotnet/csharp/) - Server Environment
 
 ## ✍️ Authors <a name = "authors"></a>
 
-- [@kylelobo](https://github.com/kylelobo) - Idea & Initial work
+- [@rezafaghani](https://github.com/rezafaghani) - Idea & Initial work
 
-See also the list of [contributors](https://github.com/kylelobo/The-Documentation-Compendium/contributors) who participated in this project.
+See also the list of [contributors](https://github.com/rezafaghani/GithubProfiler/graphs/contributors) who participated in this project.
 
 ## 🎉 Acknowledgements <a name = "acknowledgement"></a>
 
